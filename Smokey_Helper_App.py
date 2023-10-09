@@ -1,5 +1,5 @@
 import ac
-import sol_UI  # Importing the sol_UI module for better UI handling
+import sol_UI as ui
 
 appName = "AC Drift Setup Helper"
 width, height = 400, 800
@@ -17,21 +17,19 @@ def acMain(ac_version):
 
     def addLabelAndProgressBar(title, min_val, max_val, default_val):
         nonlocal yOffset
-        label = sol_UI.addLabel(appWindow, title, 10, yOffset, width-20, labelHeight)  # Using sol_UI for better positioning
+        label = ui.label(appWindow, title, 10, yOffset, width-20, labelHeight)
         yOffset += labelHeight + spacing
-        progressBar = sol_UI.addProgressBar(appWindow, 10, yOffset, width-20, progressBarHeight)  # Using sol_UI for better positioning
-        ac.setRange(progressBar, min_val, max_val)
-        ac.setValue(progressBar, default_val)
+        progressBar = ui.hslider(appWindow, 10, yOffset, width-20, progressBarHeight, min_val, max_val, default_val)
         yOffset += progressBarHeight + spacing
         return progressBar
 
     def addLabelAndDropdown(title, items):
         nonlocal yOffset
-        label = sol_UI.addLabel(appWindow, title, 10, yOffset, width-20, labelHeight)  # Using sol_UI for better positioning
+        label = ui.label(appWindow, title, 10, yOffset, width-20, labelHeight)
         yOffset += labelHeight + spacing
-        dropdown = sol_UI.addListBox(appWindow, 10, yOffset, width-20, dropdownHeight)  # Using sol_UI for better positioning
+        dropdown = ui.listbox(appWindow, 10, yOffset, width-20, dropdownHeight)
         for item in items:
-            ac.addItem(dropdown, item)  # Corrected this line
+            ac.addItem(dropdown, item)
         yOffset += dropdownHeight + spacing
         return dropdown
 
