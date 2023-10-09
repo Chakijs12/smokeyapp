@@ -1,4 +1,5 @@
 import ac
+import sol_UI  # Importing the sol_UI module for better UI handling
 
 appName = "AC Drift Setup Helper"
 width, height = 400, 800
@@ -14,35 +15,24 @@ def acMain(ac_version):
     spacing = 10
     dropdownHeight = 30
 
-    feedback_labels = []
-
     def addLabelAndProgressBar(title, min_val, max_val, default_val):
         nonlocal yOffset
-        label = ac.addLabel(appWindow, title)
-        ac.setPosition(label, 10, yOffset)
-        ac.setSize(label, width-20, labelHeight)
+        label = sol_UI.addLabel(appWindow, title, 10, yOffset, width-20, labelHeight)  # Using sol_UI for better positioning
         yOffset += labelHeight + spacing
-        progressBar = ac.addProgressBar(appWindow)
-        ac.setPosition(progressBar, 10, yOffset)
-        ac.setSize(progressBar, width-20, progressBarHeight)
+        progressBar = sol_UI.addProgressBar(appWindow, 10, yOffset, width-20, progressBarHeight)  # Using sol_UI for better positioning
         ac.setRange(progressBar, min_val, max_val)
         ac.setValue(progressBar, default_val)
         yOffset += progressBarHeight + spacing
-        ac.setVisible(progressBar, 1)
         return progressBar
 
     def addLabelAndDropdown(title, items):
         nonlocal yOffset
-        label = ac.addLabel(appWindow, title)
-        ac.setPosition(label, 10, yOffset)
-        ac.setSize(label, width-20, labelHeight)
+        label = sol_UI.addLabel(appWindow, title, 10, yOffset, width-20, labelHeight)  # Using sol_UI for better positioning
         yOffset += labelHeight + spacing
-        dropdown = ac.addListBox(appWindow, width-20, dropdownHeight)
-        ac.setPosition(dropdown, 10, yOffset)
+        dropdown = sol_UI.addListBox(appWindow, 10, yOffset, width-20, dropdownHeight)  # Using sol_UI for better positioning
         for item in items:
-            ac.addItem(dropdown, item)
+            ac.addItem(dropdown, item)  # Corrected this line
         yOffset += dropdownHeight + spacing
-        ac.setVisible(dropdown, 1)
         return dropdown
 
     # UI Elements
@@ -57,40 +47,6 @@ def acMain(ac_version):
     handbrakeSensitivityProgressBar = addLabelAndProgressBar("Handbrake Sensitivity", 0, 100, 50)
     weightDistributionProgressBar = addLabelAndProgressBar("Weight Distribution", 40, 60, 50)
     aeroSettingProgressBar = addLabelAndProgressBar("Aero Setting", 0, 100, 50)
-
-    def provide_feedback():
-        feedback = []
-
-        # Tire Pressure Feedback
-        tire_pressure = ac.getValue(tirePressureProgressBar)
-        if tire_pressure < 25:
-            feedback.append("Tire pressure is too low. Consider increasing it.")
-        elif tire_pressure > 35:
-            feedback.append("Tire pressure is too high. Consider decreasing it.")
-
-        # Suspension Feedback
-        suspension_stiffness = ac.getValue(suspensionStiffnessProgressBar)
-        if suspension_stiffness < 3:
-            feedback.append("Suspension is too soft. Consider increasing stiffness.")
-        elif suspension_stiffness > 8:
-            feedback.append("Suspension is too stiff. Consider decreasing stiffness.")
-
-        # ... [Add feedback for other UI elements]
-
-        # Clear old feedback labels
-        for label in feedback_labels:
-            ac.removeLabel(appWindow, label)
-        feedback_labels.clear()
-
-        # Display feedback to the user
-        for idx, message in enumerate(feedback):
-            feedback_label = ac.addLabel(appWindow, message)
-            ac.setPosition(feedback_label, 10, yOffset + idx * (labelHeight + spacing))
-            ac.setSize(feedback_label, width-20, labelHeight)
-            feedback_labels.append(feedback_label)
-
-    # Call the feedback function to provide feedback based on the current setup
-    provide_feedback()
 
     return appName
 
