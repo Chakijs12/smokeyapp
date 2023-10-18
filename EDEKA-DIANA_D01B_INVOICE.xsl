@@ -199,7 +199,7 @@
 			</element>
 			<!-- 1004  DOCUMENT/MESSAGE NUMBER (C  an..35) -->
 			<element>
-				<xsl:value-of select="substring(normalize-space(Invoice-Header/InvoiceNumber), 1, 35)"/>
+				<xsl:value-of select="'ds6'"/>
 			</element>
 			<!-- 1225  MESSAGE FUNCTION, CODED (C  an..3) -->
 			<element>
@@ -431,7 +431,8 @@ GS1 Description: A period which is designated by tax authorities, e.g. VAT perio
 					<!-- ON Order number (purchase) -->
 				</subelement>
 				<subelement>
-					<xsl:value-of select="substring(normalize-space(Invoice-Header/InvoiceNumber), 1, 35)"/>
+				 <xsl:text>ds6</xsl:text>
+					<!--<xsl:value-of select="substring(normalize-space(Invoice-Header/InvoiceNumber), 1, 35)"/><!-->
 				</subelement>
 			</element>
 		</segment>
@@ -1204,7 +1205,10 @@ GS1 Description: A period which is designated by tax authorities, e.g. VAT perio
 			</xsl:choose>
 		</xsl:if>
 	</xsl:template>
-</xsl:stylesheet><!-- Stylus Studio meta-information - (c) 2004-2009. Progress Software Corporation. All rights reserved.
+
+</xsl:stylesheet>
+
+<!-- Stylus Studio meta-information - (c) 2004-2009. Progress Software Corporation. All rights reserved.
 
 <metaInformation>
 	<scenarios>
