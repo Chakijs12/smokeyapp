@@ -24,7 +24,6 @@
 			<xsl:apply-templates mode="message" select="."/>
 		</xsl:variable>
 		<xsl:variable name="processed_doc" select="exsl:node-set($processed_doc_tmp)"/>
-		<xsl:variable name="processed_doc2" select="exsl:node-set($processed_doc_tmp)"/>
 
 
 		<!--PTG Management and OTHERS D01B Format Abroad partners-->
@@ -98,7 +97,7 @@
 			</element>-->
 		</segment>
 		<!-- Main content (has only the beginning of the message envelope) -->
-		<xsl:copy-of select="$processed_doc2"/>
+		<xsl:copy-of select="$processed_doc"/>
 		<segment tag="UNH">
 			<element>
 
@@ -458,7 +457,7 @@ GS1 Description: A period which is designated by tax authorities, e.g. VAT perio
 		<segment tag="UNT">
 			<element>
 				<!-- Number of segments between UNH and UNT (inclusive) -->
-				<xsl:value-of select="count($processed_doc2/segment) + 2"/>
+				<xsl:value-of select="count($processed_doc/segment) + 2"/>
 				<!-- Or: count($processed_doc/child::*) + 1 -->
 			</element>
 			<element>
